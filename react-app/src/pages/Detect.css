@@ -1,0 +1,84 @@
+/* General Styles */
+.detect-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #040C18, #0A192F, #16213E); /* Matching Home.css Gradient */
+  color: whitesmoke; /* Matching text color */
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+}
+
+/* Header and Title */
+.App-header {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white (matching Home.css) */
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px); /* Frosted glass effect */
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #FFD700; /* Gold accent color (matching Home.css) */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Video Container */
+.video-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  border: 5px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.video-feed {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Output Box */
+.output-box {
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white (matching Home.css) */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.output-box h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: whitesmoke; /* Matching text color */
+}
+
+.letter {
+  color: #FFD700; /* Gold accent color (matching Home.css) */
+  font-weight: bold;
+  font-size: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.video-container, .output-box {
+  animation: fadeIn 1s ease-in-out;
+}

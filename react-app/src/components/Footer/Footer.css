@@ -1,0 +1,35 @@
+
+
+.footer-container{
+    background-color: #05234f;
+    color: white;
+    
+}
+
+.footer-container {
+    padding: 10px;
+    text-align: center;
+}
+
+.footer-container p {
+    margin-bottom: 10px; /* Adds space below the text */
+}
+
+.footer-container div {
+    display: flex;
+    justify-content: center;
+    gap: 25px; /* Space between icons */
+    padding-top: 2px; /* Adds space above the icons */
+}
+
+.footer-container a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+    margin-bottom: 40px;
+    margin-top: 10px;
+}
+
+.footer-container a:hover {
+    color: #ddd;
+}
