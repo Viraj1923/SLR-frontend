@@ -31,7 +31,7 @@ const Home = () => {
       <div className="imgs">
         <img 
           ref={(el) => (elementsRef.current[0] = el)}
-          src="/public/SignHand 1.svg" 
+          src="../assets/SignHand 1.svg" 
           alt="" 
           className={`scroll-element ${visibleElements[0] ? "visible" : ""}`} 
         />
