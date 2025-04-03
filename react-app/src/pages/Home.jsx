@@ -32,13 +32,13 @@ const Home = () => {
         <img 
           ref={(el) => (elementsRef.current[0] = el)}
           src="./assets/SignHand 1.svg" 
-          alt="" 
+          alt="logo" 
           className={`scroll-element ${visibleElements[0] ? "visible" : ""}`} 
         />
         <img 
           ref={(el) => (elementsRef.current[1] = el)}
           src="/public/home-text.svg" 
-          alt="" 
+          alt="hometxt" 
           className={`scroll-element ${visibleElements[1] ? "visible" : ""}`} 
         />
       </div>
@@ -46,13 +46,13 @@ const Home = () => {
         ref={(el) => (elementsRef.current[2] = el)}
         className={`about scroll-element ${visibleElements[2] ? "visible" : ""}`} 
         src="/public/about.svg" 
-        alt="" 
+        alt="about" 
       />
       <img 
         ref={(el) => (elementsRef.current[3] = el)}
         className={`about scroll-element ${visibleElements[3] ? "visible" : ""}`} 
         src="/public/ourTeam.svg" 
-        alt="" 
+        alt="team" 
       />
     </div>
   );
