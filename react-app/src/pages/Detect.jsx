@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Detect.css";
 
+const BACKEND_URL = "https://your-render-backend-url.onrender.com";
+
 const Detect = () => {
   const [detectedLetter, setDetectedLetter] = useState("");
 
   useEffect(() => {
     // Fetch detected letter every 2 seconds
     const interval = setInterval(() => {
-      fetch("http://127.0.0.1:5000/get_label")
+      fetch(`${BACKEND_URL}/predict`)
         .then((response) => response.json())
         .then((data) => {
           console.log("API Response:", data);
@@ -25,7 +27,7 @@ const Detect = () => {
         <h1 className="title">Real-Time Sign Detection</h1>
         <div className="video-container">
           <img
-            src="http://127.0.0.1:5000/video_feed"
+            src={`${BACKEND_URL}/video_feed`}
             alt="Video Feed"
             className="video-feed"
           />
