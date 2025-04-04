@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Detect.css";
 
-const BACKEND_URL = "https://your-render-backend-url.onrender.com";
+const BACKEND_URL = "https://slr-backend.onrender.com";
 
 const Detect = () => {
   const [detectedLetter, setDetectedLetter] = useState("");
