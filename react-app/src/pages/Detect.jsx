@@ -27,9 +27,9 @@ const Detect = () => {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
 
-      // Set canvas size to video size
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      // ✅ Set canvas to model input size
+      canvas.width = 224;
+      canvas.height = 224;
 
       // Draw video frame to canvas
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -37,7 +37,7 @@ const Detect = () => {
       // Get base64 image from canvas
       const imageBase64 = canvas.toDataURL("image/jpeg").split(",")[1];
 
-      // Send to backend
+      // Send image to backend
       fetch(`${BACKEND_URL}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
