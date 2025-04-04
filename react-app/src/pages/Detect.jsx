@@ -16,7 +16,10 @@ const Detect = () => {
           videoRef.current.srcObject = stream;
         }
       })
-      .catch((err) => console.error("Error accessing camera:", err));
+      .catch((err) => {
+  console.error("❌ Prediction error:", err.message || err);
+  });
+
   }, []);
 
   useEffect(() => {
@@ -36,6 +39,9 @@ const Detect = () => {
 
       // Get base64 image from canvas
       const imageBase64 = canvas.toDataURL("image/jpeg").split(",")[1];
+      console.log("📤 Sending image to backend...");
+      console.log("Image size (base64):", imageBase64.length);
+      console.log("URL:", `${BACKEND_URL}/predict`);
 
       // Send image to backend
       fetch(`${BACKEND_URL}/predict`, {
@@ -50,7 +56,10 @@ const Detect = () => {
             setDetectedLetter(data.label);
           }
         })
-        .catch((err) => console.error("Prediction error:", err));
+        .catch((err) => {
+  console.error("❌ Prediction error:", err.message || err);
+  });
+
     }, 2000);
 
     return () => clearInterval(interval);
