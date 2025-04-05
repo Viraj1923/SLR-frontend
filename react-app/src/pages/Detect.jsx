@@ -5,23 +5,26 @@ const BACKEND_URL = "https://slr-backend.onrender.com";
 
 const Detect = () => {
   const [detectedLetter, setDetectedLetter] = useState("");
+  const [error, setError] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
+  // Start video stream
   useEffect(() => {
-    // Access webcam
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then((stream) => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
       })
       .catch((err) => {
-  console.error("❌ Prediction error:", err.message || err);
-  });
-
+        console.error("❌ Webcam access error:", err.message || err);
+        setError("Unable to access webcam.");
+      });
   }, []);
 
+  // Capture and send frame every 2 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       if (!videoRef.current || !canvasRef.current) return;
@@ -30,36 +33,42 @@ const Detect = () => {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
 
-      // ✅ Set canvas to model input size
       canvas.width = 224;
       canvas.height = 224;
 
-      // Draw video frame to canvas
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // Get base64 image from canvas
       const imageBase64 = canvas.toDataURL("image/jpeg").split(",")[1];
-      console.log("📤 Sending image to backend...");
-      console.log("Image size (base64):", imageBase64.length);
-      console.log("URL:", `${BACKEND_URL}/predict`);
 
-      // Send image to backend
+      // Check if image is too large
+      if (imageBase64.length > 2_000_000) {
+        console.warn("⚠️ Skipping frame: base64 image too large.");
+        return;
+      }
+
+      console.log("📤 Sending image to backend...");
+      console.log("Base64 size:", imageBase64.length);
+
       fetch(`${BACKEND_URL}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ image: imageBase64 }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Prediction:", data);
-          if (data.label) {
-            setDetectedLetter(data.label);
+        .then(async (res) => {
+          if (!res.ok) {
+            const errMsg = await res.text();
+            throw new Error(errMsg);
           }
+          return res.json();
+        })
+        .then((data) => {
+          console.log("✅ Prediction received:", data);
+          if (data.label) setDetectedLetter(data.label);
         })
         .catch((err) => {
-  console.error("❌ Prediction error:", err.message || err);
-  });
-
+          console.error("❌ Prediction error:", err.message || err);
+          setError("Prediction failed. Please try again.");
+        });
     }, 2000);
 
     return () => clearInterval(interval);
@@ -71,19 +80,16 @@ const Detect = () => {
         <h1 className="title">Real-Time Sign Detection</h1>
 
         <div className="video-container">
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            className="video-feed"
-          />
+          <video ref={videoRef} autoPlay playsInline className="video-feed" />
           <canvas ref={canvasRef} style={{ display: "none" }} />
         </div>
 
         <div className="output-box">
           <h2>
-            Detected Letter: <span className="letter">{detectedLetter}</span>
+            Detected Letter:{" "}
+            <span className="letter">{detectedLetter || "-"}</span>
           </h2>
+          {error && <p className="error-msg">⚠️ {error}</p>}
         </div>
       </header>
     </div>
