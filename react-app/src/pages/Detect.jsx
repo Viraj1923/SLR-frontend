@@ -33,8 +33,8 @@ const Detect = () => {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
 
-      canvas.width = 224;
-      canvas.height = 224;
+      canvas.width = 96;
+      canvas.height = 96;
 
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
