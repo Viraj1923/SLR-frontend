@@ -6,28 +6,28 @@ const BACKEND_URL = "https://slr-backend.onrender.com";
 const Detect = () => {
   const [detectedLetter, setDetectedLetter] = useState("");
   const [error, setError] = useState(null);
+  const [isSending, setIsSending] = useState(false);
+
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  // Start video stream
+  // Start webcam
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
+        if (videoRef.current) videoRef.current.srcObject = stream;
       })
       .catch((err) => {
-        console.error("❌ Webcam access error:", err.message || err);
+        console.error("❌ Webcam access error:", err.message);
         setError("Unable to access webcam.");
       });
   }, []);
 
-  // Capture and send frame every 2 seconds
+  // Continuous prediction loop
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!videoRef.current || !canvasRef.current) return;
+      if (!videoRef.current || !canvasRef.current || isSending) return;
 
       const video = videoRef.current;
       const canvas = canvasRef.current;
@@ -37,42 +37,35 @@ const Detect = () => {
       canvas.height = 96;
 
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
       const imageBase64 = canvas.toDataURL("image/jpeg").split(",")[1];
 
-      // Check if image is too large
-      if (imageBase64.length > 2_000_000) {
-        console.warn("⚠️ Skipping frame: base64 image too large.");
-        return;
-      }
+      if (imageBase64.length > 2_000_000) return;
 
-      console.log("📤 Sending image to backend...");
-      console.log("Base64 size:", imageBase64.length);
-
+      setIsSending(true);
       fetch(`${BACKEND_URL}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ image: imageBase64 }),
       })
         .then(async (res) => {
-          if (!res.ok) {
-            const errMsg = await res.text();
-            throw new Error(errMsg);
-          }
+          if (!res.ok) throw new Error(await res.text());
           return res.json();
         })
         .then((data) => {
-          console.log("✅ Prediction received:", data);
           if (data.label) setDetectedLetter(data.label);
+          setError(null);
         })
         .catch((err) => {
-          console.error("❌ Prediction error:", err.message || err);
-          setError("Prediction failed. Please try again.");
+          console.error("❌ Prediction error:", err.message);
+          setError("Prediction failed.");
+        })
+        .finally(() => {
+          setIsSending(false);
         });
-    }, 2000);
+    }, 200); // ~5 FPS
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isSending]);
 
   return (
     <div className="detect-container">
