@@ -1,88 +1,55 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Detect.css";
 
-const BACKEND_URL = "https://slr-backend.onrender.com";
+// ✅ Change this to your Render FastAPI backend URL when deployed
+const API_BASE = "https://slr-backend.onrender.com"; // <- replace with your actual deployed backend URL
 
 const Detect = () => {
   const [detectedLetter, setDetectedLetter] = useState("");
-  const [error, setError] = useState(null);
-  const [isSending, setIsSending] = useState(false);
+  const [lastSpoken, setLastSpoken] = useState("");
 
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
-
-  // Start webcam
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        if (videoRef.current) videoRef.current.srcObject = stream;
-      })
-      .catch((err) => {
-        console.error("❌ Webcam access error:", err.message);
-        setError("Unable to access webcam.");
-      });
-  }, []);
+    const speak = (text) => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.9;
+      speechSynthesis.speak(utterance);
+    };
 
-  // Continuous prediction loop
-  useEffect(() => {
     const interval = setInterval(() => {
-      if (!videoRef.current || !canvasRef.current || isSending) return;
-
-      const video = videoRef.current;
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-
-      canvas.width = 96;
-      canvas.height = 96;
-
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const imageBase64 = canvas.toDataURL("image/jpeg").split(",")[1];
-
-      if (imageBase64.length > 2_000_000) return;
-
-      setIsSending(true);
-      fetch(`${BACKEND_URL}/predict`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: imageBase64 }),
-      })
-        .then(async (res) => {
-          if (!res.ok) throw new Error(await res.text());
-          return res.json();
-        })
+      fetch(`${API_BASE}/get_label`)
+        .then((response) => response.json())
         .then((data) => {
-          if (data.label) setDetectedLetter(data.label);
-          setError(null);
+          console.log("API Response:", data);
+          const label = data.label;
+          setDetectedLetter(label);
+
+          if (label && label !== "No Detection" && label !== lastSpoken) {
+            speak(label);
+            setLastSpoken(label);
+          }
         })
-        .catch((err) => {
-          console.error("❌ Prediction error:", err.message);
-          setError("Prediction failed.");
-        })
-        .finally(() => {
-          setIsSending(false);
-        });
-    }, 200); // ~5 FPS
+        .catch((error) => console.error("Error fetching label:", error));
+    }, 2000);
 
     return () => clearInterval(interval);
-  }, [isSending]);
+  }, [lastSpoken]);
 
   return (
     <div className="detect-container">
       <header className="App-header">
         <h1 className="title">Real-Time Sign Detection</h1>
-
         <div className="video-container">
-          <video ref={videoRef} autoPlay playsInline className="video-feed" />
-          <canvas ref={canvasRef} style={{ display: "none" }} />
+          <img
+            src={`${API_BASE}/video_feed`}
+            alt="Video Feed"
+            className="video-feed"
+          />
         </div>
-
         <div className="output-box">
           <h2>
             Detected Letter:{" "}
-            <span className="letter">{detectedLetter || "-"}</span>
+            <span className="letter">{detectedLetter}</span>
           </h2>
-          {error && <p className="error-msg">⚠️ {error}</p>}
         </div>
       </header>
     </div>
