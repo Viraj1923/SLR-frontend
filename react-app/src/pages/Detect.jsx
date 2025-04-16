@@ -39,7 +39,7 @@ const Detect = () => {
       const base64Image = canvas.toDataURL("image/jpeg");
 
       try {
-        const res = await fetch(`${API_BASE}/video_feed`, {
+        const res = await fetch(`${API_BASE}/predict`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
