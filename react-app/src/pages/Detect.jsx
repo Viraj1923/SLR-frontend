@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Detect.css";
 
-// ✅ Change this to your Render FastAPI backend URL when deployed
-const API_BASE = "https://slr-backend.onrender.com"; // <- replace with your actual deployed backend URL
+const API_BASE = "https://slr-backend.onrender.com"; // ✅ Your deployed FastAPI backend
 
 const Detect = () => {
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const [detectedLetter, setDetectedLetter] = useState("");
   const [lastSpoken, setLastSpoken] = useState("");
 
@@ -15,23 +16,59 @@ const Detect = () => {
       speechSynthesis.speak(utterance);
     };
 
-    const interval = setInterval(() => {
-      fetch(`${API_BASE}/get_label`)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("API Response:", data);
-          const label = data.label;
-          setDetectedLetter(label);
+    const startVideo = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        videoRef.current.srcObject = stream;
+      } catch (error) {
+        console.error("Error accessing webcam:", error);
+      }
+    };
 
-          if (label && label !== "No Detection" && label !== lastSpoken) {
-            speak(label);
-            setLastSpoken(label);
-          }
-        })
-        .catch((error) => console.error("Error fetching label:", error));
-    }, 2000);
+    const sendFrame = async () => {
+      if (!videoRef.current || !canvasRef.current) return;
 
-    return () => clearInterval(interval);
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = 224;
+      canvas.height = 224;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const base64Image = canvas.toDataURL("image/jpeg");
+
+      try {
+        const res = await fetch(`${API_BASE}/predict`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ image: base64Image }),
+        });
+
+        const data = await res.json();
+        const label = data.label;
+        setDetectedLetter(label);
+
+        if (label && label !== "No Detection" && label !== lastSpoken) {
+          speak(label);
+          setLastSpoken(label);
+        }
+      } catch (error) {
+        console.error("Prediction error:", error);
+      }
+    };
+
+    startVideo();
+    const interval = setInterval(sendFrame, 2000);
+
+    return () => {
+      clearInterval(interval);
+      if (videoRef.current?.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+      }
+    };
   }, [lastSpoken]);
 
   return (
@@ -39,16 +76,12 @@ const Detect = () => {
       <header className="App-header">
         <h1 className="title">Real-Time Sign Detection</h1>
         <div className="video-container">
-          <img
-            src={`${API_BASE}/video_feed`}
-            alt="Video Feed"
-            className="video-feed"
-          />
+          <video ref={videoRef} autoPlay playsInline className="video-feed" />
+          <canvas ref={canvasRef} style={{ display: "none" }} />
         </div>
         <div className="output-box">
           <h2>
-            Detected Letter:{" "}
-            <span className="letter">{detectedLetter}</span>
+            Detected Letter: <span className="letter">{detectedLetter}</span>
           </h2>
         </div>
       </header>
