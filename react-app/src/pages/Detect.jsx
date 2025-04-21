@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Detect.css";
 
-const API_BASE = " http://127.0.0.1:8000"; // ✅ Your deployed FastAPI backend
+const API_BASE = "https://your-custom-name.loca.lt"; // ✅ Your deployed FastAPI backend
 
 const Detect = () => {
   const videoRef = useRef(null);
