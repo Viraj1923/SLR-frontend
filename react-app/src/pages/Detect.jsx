@@ -32,8 +32,8 @@ const Detect = () => {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
 
-      canvas.width = 224;
-      canvas.height = 224;
+      canvas.width = 554;
+      canvas.height = 554;
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       const base64Image = canvas.toDataURL("image/jpeg");
