@@ -3,6 +3,35 @@
 *{
   font-family: "Plus Jakarta Sans", sans-serif;
 }
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-area {
+  flex: 1;
+}
+
+.custom-toast {
+  min-height: 80px !important;
+  width: 400px !important;
+  font-size: 1.7rem;
+  border-radius: 8px;
+}
+
+.custom-toast-body {
+  font-size: 1.7rem;
+  font-weight: 500;
+  padding: 16px;
+}
+
 /* #root {
   max-width: 1280px;
   margin: 0 auto;

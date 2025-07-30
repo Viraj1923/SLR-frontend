@@ -1,38 +1,223 @@
-.nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #040C18;
-    height:80px;
-    width: auto;
-    border-bottom: 1.5px solid #425D7A;
-    
-
-
+body {
+  overflow-x: hidden; /* Prevent unwanted horizontal scroll */
 }
 
-.nav-logo{
-    width: 70px;
-    height: auto;
-    padding: 50px;
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #040c18;
+  height: 80px;
+  width: 100%;
+  border-bottom: 1.5px solid #425d7a;
+  position: relative;
+  z-index: 10;
+  overflow: visible;
 }
-.nav-links{
-    display: flex;
-    gap: 60px;
-    margin-left: auto;
-    padding-right: 60px;
-    margin-bottom: 40px;
+
+.nav-logo {
+  width: 70px;
+  height: auto;
+  padding: 10px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin-left: auto;
+  padding-right: 50px;
+  position: relative;
+  overflow: visible;
 }
 
 .nav-links a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out;
-    font-size: 1.5rem;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+  font-size: 1.5rem;
 }
 
 .nav-links a:hover {
   color: grey;
+}
+
+.profile-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  z-index: 100;
+}
+
+.profile-icon {
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.profile-icon:hover {
+  color: grey;
+}
+
+/* ---- Dropdown Menu ---- */
+.dropdown-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background-color: #24242b;
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  padding: 22px 20px 16px 20px;
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  
+}
+
+.dropdown-menu.show {
+  display: flex;
+  background-color: #fff;
+  color: #181818;
+  border: 1px solid #ededed;
+  animation: fadeIn 0.18s ease-in;
+  
+}
+
+.dropdown-menu,
+.dropdown-menu.show {
+  width: 260px !important;
+  right: 0;
+  left: auto !important;
+  box-sizing: border-box !important;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 20px;
+  
+}
+ 
+.button-dropdown{
+  width: 50% !important;
+  margin: 10px;
+  font-size: 15px !important;
+  background-color: rgb(222, 0, 0) !important;
+  
+}
+.button-dropdown-out{
+  width: 50% !important;
+  margin: 10px;
+  font-size: 15px !important;
+  background-color: #2563eb !important;
+  color: white !important;
+  
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* ---- User Info Inside Dropdown ---- */
+.dropdown-user-info {
+  margin-bottom: 11px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e6e6e6;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-user-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 98%;
+}
+
+.dropdown-user-email {
+  font-size: 0.92rem;
+  color: #4a4a4a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 98%;
+}
+
+.dropdown-menu.show .dropdown-user-name,
+.dropdown-menu.show .dropdown-user-email {
+  color: #1a1a1a;
+}
+
+/* ---- Dropdown Buttons ---- */
+.dropdown-menu button {
+  background-color: #f1f1f1;
+  border: 1px solid #dadada;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #181818;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 2px;
+  text-align: left;
+  transition: background-color 0.18s, border-color 0.18s, color 0.18s, transform 0.12s;
+  outline: none;
+}
+.dropdown-menu button:hover {
+  background-color: #f7f7f7;
+  border-color: #b3b3b3;
+  color: #111;
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Optional: Style for non-logged in dropdown variant */
+.dropdown-menu:not(.show) button {
+  background-color: #181818;
+  color: #f1f1f1;
+  border-color: #2e2e2e;
+}
+
+/* Paragraph Styling */
+.dropdown-menu p {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0;
+  color: #1a1a1a;
+  word-break: break-all; /* fallback for very extreme cases */
+}
+
+/* ---- Mobile Responsive ---- */
+@media (max-width: 550px) {
+  .dropdown-menu, .dropdown-menu.show {
+    min-width: 95vw;
+    max-width: 98vw;
+    left: 2vw;
+    right: auto;
+    padding: 18px 8px;
+  }
+  .dropdown-user-name, .dropdown-user-email {
+    max-width: 96vw;
+  }
+  .nav-links {
+    padding-right: 6px;
+  }
+}
+
+.dropdown-profile-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 10px auto;
+  border: 2px solid #3e3e3e;
 }

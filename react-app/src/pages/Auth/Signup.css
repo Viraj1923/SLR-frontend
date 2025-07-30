@@ -1,0 +1,115 @@
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(to right, #040C18, #0A192F, #16213E);
+  font-size: 1.125rem; /* 18px */
+}
+
+/* Wrapper */
+.signup-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Signup Card */
+.form-container {
+  background-color: #fff;
+  padding: 3rem 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 460px;
+  text-align: center;
+}
+
+/* Title */
+.title-signup {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1f2937;
+  letter-spacing: -1.5px;
+}
+
+/* Form Layout */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Input Field */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: #374151;
+}
+
+.input-group input {
+  padding: 0.85rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1.18rem;
+  outline: none;
+  transition: 0.2s ease;
+  background-color: #f9fafb;
+}
+
+.input-group input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Sign Up Button */
+.sign {
+  padding: 0.85rem 1rem;
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: white;
+  background-color: #2563eb;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sign:hover {
+  background-color: #1d4ed8;
+}
+
+/* Link to Login */
+.login-link {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #4b5563;
+}
+
+.login-link a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+
+.google-icon { height: 32px; width: 32px; }

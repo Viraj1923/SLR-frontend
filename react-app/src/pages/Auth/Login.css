@@ -1,0 +1,203 @@
+/* Import Poppins from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Universal font, smooth rendering */
+* {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(to right, #040C18, #0A192F, #16213E);
+  font-size: 1.125rem; /* 18px base */
+}
+
+/* Full-screen centered wrapper */
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #040C18, #0A192F, #16213E);
+}
+
+/* Card container */
+.form-container {
+  background-color: #fff;
+  padding: 3rem 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 460px;
+  text-align: center;
+}
+
+/* Title */
+.title-login {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1f2937;
+  letter-spacing: -1.5px;
+}
+
+
+/* Form layout */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Input group */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: #374151;
+}
+
+.input-group input {
+  padding: 0.85rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1.18rem;
+  outline: none;
+  transition: 0.2s ease;
+  background-color: #f9fafb;
+}
+
+.input-group input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Forgot password */
+.forgot {
+  text-align: right;
+  margin-top: 0.4rem;
+}
+
+.forgot a {
+  font-size: 1.1rem;
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot a:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+
+/* Sign in button */
+.sign {
+  padding: 0.85rem 1rem;
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: white;
+  background-color: #2563eb;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sign:hover {
+  background-color: #1d4ed8;
+}
+
+/* Divider line with text */
+.social-message {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: #d1d5db;
+}
+
+.message {
+  margin: 0 1rem;
+  font-size: 1.1rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Social icons row */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Google icon button */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.65rem;
+  background: white;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.icon:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Fix Google icon color */
+.icon svg {
+  fill: #4285F4;
+  width: 22px;
+  height: 22px;
+}
+
+/* Signup text */
+.signup {
+  font-size: 1.1rem;
+  color: #4b5563;
+}
+
+.signup a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.signup a:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+
+.google-icon {
+  height: 32px;
+  width: 32px;
+}
+
+.forgot-link {
+  background: none;
+  border: none;
+  color: #007bff;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  color: #0056b3;
+}

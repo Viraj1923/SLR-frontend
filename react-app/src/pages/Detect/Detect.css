@@ -1,0 +1,21 @@
+.detect-selector {
+    text-align: center;
+    padding: 50px;
+    color: white;
+}
+
+.detect-options button {
+    margin: 20px;
+    padding: 20px 40px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    background-color: #fbbf24;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.detect-options button:hover {
+    background-color: #facc15;
+    transform: scale(1.05);
+}
