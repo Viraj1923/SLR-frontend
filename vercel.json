@@ -12,5 +12,5 @@
       "dest": "/index.html"
     }
   ],
-  "outputDirectory": "dist"  // ✅ This tells Vercel to serve from dist/
+  "outputDirectory": "dist"  
 }
