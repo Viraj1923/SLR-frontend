@@ -1,16 +1,15 @@
 {
   "version": 2,
   "builds": [
-    { "src": "package.json", "use": "@vercel/static-build" }
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|eot|ttf|woff|woff2))",
-      "destination": "/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "dest": "index.html"
     }
   ]
 }
