@@ -14,6 +14,7 @@ import ASLDetect from "./pages/Detect/ASLDetect/ASLDetect";
 import ISLDetect from "./pages/Detect/ISLDetect/ISLDetect";
 import NotFound from "./pages/NotFound/NotFound";
 import Profile from "./pages/Profile/Profile";
+import UploadDetect from "./pages/Detect/ASLDetect/UploadDetect";
 
 function App() {
   return (
@@ -26,6 +27,15 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/detect" element={<Detect />} />
+            <Route
+              path="/upload-test"
+              element={
+                <PrivateRoute>
+                  <UploadDetect />
+                </PrivateRoute>
+              }
+            />
+
             <Route
               path="/detect/asl"
               element={
