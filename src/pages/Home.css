@@ -1,0 +1,38 @@
+/* body{
+    background-color: #040C18;
+} */
+
+.home-container{
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    background-color: #040C18;
+}
+.imgs{
+    display: flex;
+    width: 100%;
+    /* flex-direction: column; */
+    overflow: hidden;
+    /* padding: 10px; */
+    height: 50%;
+    width: auto;
+
+}
+
+p{
+    color: whitesmoke;
+    
+}
+
+.scroll-element {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 3s ease-out, transform 3s ease-out;
+}
+  
+.scroll-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+  
+  

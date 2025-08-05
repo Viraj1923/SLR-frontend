@@ -1,24 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./ASLDetect.css";
+import "./Detect.css";
 
-const API_BASE = "https://slr-backend.onrender.com"; // ✅ Your deployed Flask backend
+const API_BASE = "https://slr-backend.onrender.com"; // ✅ Your deployed FastAPI backend
 
-const ASLDetect = () => {
+const Detect = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [detectedLetter, setDetectedLetter] = useState("");
   const [lastSpoken, setLastSpoken] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // 🔐 Check if user is authenticated
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
     const speak = (text) => {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 0.9;
@@ -69,18 +60,16 @@ const ASLDetect = () => {
       }
     };
 
-    // Start everything
     startVideo();
     const interval = setInterval(sendFrame, 2000);
 
-    // Cleanup on unmount
     return () => {
       clearInterval(interval);
       if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
       }
     };
-  }, [lastSpoken, navigate]);
+  }, [lastSpoken]);
 
   return (
     <div className="detect-container">
@@ -100,4 +89,4 @@ const ASLDetect = () => {
   );
 };
 
-export default ASLDetect;
+export default Detect;
