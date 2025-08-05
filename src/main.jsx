@@ -6,6 +6,9 @@ import './App.css'
 import App from './App.jsx'
 import { AuthProvider } from './Authcontext.jsx'
 
+console.log('Main.jsx loaded');
+
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter basename="/">
