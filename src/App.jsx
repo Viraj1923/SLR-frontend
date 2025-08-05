@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import "./index.css";
 
 import Home from "./pages/Home/Home";
 import Detect from "./pages/Detect/Detect";
@@ -15,7 +14,6 @@ import ASLDetect from "./pages/Detect/ASLDetect/ASLDetect";
 import ISLDetect from "./pages/Detect/ISLDetect/ISLDetect";
 import NotFound from "./pages/NotFound/NotFound";
 import Profile from "./pages/Profile/Profile";
-import UploadDetect from "./pages/Detect/ASLDetect/UploadDetect";
 
 function App() {
   return (
@@ -28,15 +26,6 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/detect" element={<Detect />} />
-            <Route
-              path="/upload-test"
-              element={
-                <PrivateRoute>
-                  <UploadDetect />
-                </PrivateRoute>
-              }
-            />
-
             <Route
               path="/detect/asl"
               element={

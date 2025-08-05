@@ -82,14 +82,3 @@
   .video-container, .output-box {
     animation: fadeIn 1s ease-in-out;
   }
-
-  .detect-button {
-    padding: 10px 20px;
-    font-size: 1.5rem;
-    background-color: #1976d2;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 15px;
-  }
