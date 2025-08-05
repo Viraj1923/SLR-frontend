@@ -16,9 +16,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import Profile from "./pages/Profile/Profile";
 
 function App() {
-  useEffect(() => {
-    console.log('App rendered');
-  }, []);
+  console.log('App component loaded');
   return (
     <div className="app-container">
       <Router>
